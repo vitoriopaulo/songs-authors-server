@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
-class SongsController < ApplicationController
-  before_action :set_song, only: %i[:show, :update, :destroy]
+class SongsController < ProtectedController
+  before_action :set_song, only: %i[show update destroy]
 
   # GET /songs
   def index
-    @songs = Song.all
+    @songs = current_user.songs
 
     render json: @songs
   end
 
   # GET /songs/1
   def show
-    render json: Song.find(params[:id])
+    render json: current_user.songs.find(params[:id])
   end
 
   # POST /songs
@@ -37,6 +37,7 @@ class SongsController < ApplicationController
 
   # DELETE /songs/1
   def destroy
+    # binding.pry
     @song.destroy
     head :no_content
   end
