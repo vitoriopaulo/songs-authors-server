@@ -17,6 +17,7 @@ class SongsController < ProtectedController
 
   # POST /songs
   def create
+  # binding.pry
     @song = current_user.songs.build(song_params)
 
     if @song.save
